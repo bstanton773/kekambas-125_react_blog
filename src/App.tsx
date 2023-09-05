@@ -1,8 +1,8 @@
-
+import Navigation from "./components/Navigation";
 
 export default function App() {
     const name:string = 'Brian';
-    const isLoggedIn:boolean = true;
+    const isLoggedIn:boolean = false;
 
     const posts: {id:number, title:string}[] = [
         {id: 1, title: 'Happy Tuesday'},
@@ -12,6 +12,7 @@ export default function App() {
 
     return (
         <div>
+            <Navigation isLoggedIn={isLoggedIn}/>
             { isLoggedIn ? <h1>Hello {name}!</h1> : <h1>Hello and Welcome</h1>}
             {posts.map(p => <li key={p.id}>{p.title}</li>)}
         </div>
