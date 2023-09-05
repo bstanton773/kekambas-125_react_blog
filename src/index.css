@@ -1,0 +1,11 @@
+.post-card{
+    background-color: lightcoral;
+    border: 1px solid blue;
+    padding: 5px;
+    margin: 5vh 0;
+    border-radius: 25px;
+}
+
+body{
+    background-color: lightgray
+}
