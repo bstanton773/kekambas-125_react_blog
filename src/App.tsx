@@ -18,7 +18,7 @@ export default function App() {
             <Container>
                 <Routes>
                     <Route path='/' element={<Home isLoggedIn={isLoggedIn} />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/login' element={<Login isLoggedIn={isLoggedIn} />} />
                 </Routes>
             </Container>
         </div>
