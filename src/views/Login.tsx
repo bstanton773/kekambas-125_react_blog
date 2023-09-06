@@ -6,10 +6,11 @@ import Form from 'react-bootstrap/Form';
 import UserType from '../types/auth';
 
 type LoginProps = {
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
+    logUserIn: (user:Partial<UserType>) => void
 }
 
-export default function Login({ isLoggedIn }: LoginProps) {
+export default function Login({ isLoggedIn, logUserIn }: LoginProps) {
     const navigate = useNavigate();
     
     if (isLoggedIn){
@@ -25,7 +26,7 @@ export default function Login({ isLoggedIn }: LoginProps) {
 
     const handleFormSubmit = (e: React.FormEvent):void => {
         e.preventDefault();
-        console.log(user);
+        logUserIn(user);
         navigate('/');
     }
 
