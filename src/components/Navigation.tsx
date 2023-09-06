@@ -22,7 +22,7 @@ export default function Navigation({ isLoggedIn, handleClick }:NavigationProps) 
                         </>
                     ) : (
                         <>
-                            <Nav.Link href='/'>Sign Up</Nav.Link>
+                            <Nav.Link as={Link} to='/register'>Sign Up</Nav.Link>
                             <Nav.Link as={Link} to='/login'>Log In</Nav.Link>
                         </>
                     )}
