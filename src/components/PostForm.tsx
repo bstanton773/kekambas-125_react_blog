@@ -9,15 +9,16 @@ type Post = {
 type PostFormProps = {
     handleChange: (e:React.ChangeEvent<HTMLInputElement>) => void,
     handleSubmit: (e:React.FormEvent) => void,
-    newPost: Post
+    newPost: Post,
+    isLoggedIn: boolean
 }
 
-export default function PostForm({ handleChange, handleSubmit, newPost }: PostFormProps) {
+export default function PostForm({ handleChange, handleSubmit, newPost, isLoggedIn }: PostFormProps) {
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Label>Post Title</Form.Label>
             <Form.Control name='title' onChange={handleChange} value={newPost.title} />
-            <Button className='mt-3 w-100' variant='warning' type='submit'>Create Post</Button>
+            <Button className='mt-3 w-100' variant='warning' type='submit' disabled={!isLoggedIn}>Create Post</Button>
         </Form>
     )
 }
