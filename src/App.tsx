@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Home from './views/Home';
+import Login from './views/Login';
 import Navigation from "./components/Navigation";
 
 export default function App() {
@@ -14,7 +16,10 @@ export default function App() {
         <div>
             <Navigation isLoggedIn={isLoggedIn} handleClick={handleLoginClick} />
             <Container>
-                <Home isLoggedIn={isLoggedIn} />
+                <Routes>
+                    <Route path='/' element={<Home isLoggedIn={isLoggedIn} />} />
+                    <Route path='/login' element={<Login />} />
+                </Routes>
             </Container>
         </div>
     )
