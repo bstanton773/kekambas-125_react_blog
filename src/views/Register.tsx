@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import CategoryType from '../types/category';
 import UserType from '../types/auth';
+import { register } from '../lib/apiWrapper';
 
 type RegisterProps = {
-    logUserIn: (user:Partial<UserType>) => void
+    logUserIn: (user:Partial<UserType>) => void,
+    flashMessage: (message:string|null, category: CategoryType|null) => void,
 }
 
-export default function Register({ logUserIn }: RegisterProps) {
+export default function Register({ logUserIn, flashMessage }: RegisterProps) {
     const navigate = useNavigate();
 
     const [userFormData, setUserFormData] = useState<Partial<UserType>>(
@@ -27,10 +30,15 @@ export default function Register({ logUserIn }: RegisterProps) {
         setUserFormData({...userFormData, [e.target.name]: e.target.value})
     }
 
-    const handleFormSubmit = (e: React.FormEvent): void => {
+    const handleFormSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
-        logUserIn(userFormData);
-        navigate('/')
+        let response = await register(userFormData)
+        if (response.error){
+            flashMessage(response.error, 'danger')
+        } else {
+            logUserIn(response.data!);
+            navigate('/')
+        }
     }
 
     const validatePasswords = (password: string, confirmPassword: string) => {

@@ -46,7 +46,7 @@ export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
 
     return (
         <>
-            <h1>Hello {isLoggedIn ? user?.username : 'Friend'}</h1>
+            <h1>Hello {isLoggedIn ? user?.firstName + ' ' + user?.lastName : 'Friend'}</h1>
             <PostForm handleChange={handleInputChange} handleSubmit={handleFormSubmit} newPost={newPost} isLoggedIn={isLoggedIn}/>
             {posts.map( p => <PostCard post={p}  key={p.id}/> )}
         </>

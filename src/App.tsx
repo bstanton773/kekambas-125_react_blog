@@ -46,7 +46,7 @@ export default function App() {
                 <Routes>
                     <Route path='/' element={<Home isLoggedIn={isLoggedIn} user={loggedInUser} flashMessage={flashMessage} />} />
                     <Route path='/login' element={<Login isLoggedIn={isLoggedIn} logUserIn={logUserIn} />} />
-                    <Route path='/register' element={<Register logUserIn={logUserIn} />} />
+                    <Route path='/register' element={<Register logUserIn={logUserIn} flashMessage={flashMessage} />} />
                 </Routes>
             </Container>
         </div>
