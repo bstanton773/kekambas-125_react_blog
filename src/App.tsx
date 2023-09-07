@@ -15,7 +15,7 @@ import UserType from './types/auth';
 
 
 export default function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('tokenExp') as string) > new Date()));
     const [loggedInUser, setLoggedInUser] = useState<Partial<UserType>|null>(null);
 
     const [message, setMessage] = useState<string|null>(null);
@@ -45,7 +45,7 @@ export default function App() {
                 {message && <AlertMessage category={category!} message={message} flashMessage={flashMessage} />}
                 <Routes>
                     <Route path='/' element={<Home isLoggedIn={isLoggedIn} user={loggedInUser} flashMessage={flashMessage} />} />
-                    <Route path='/login' element={<Login isLoggedIn={isLoggedIn} logUserIn={logUserIn} />} />
+                    <Route path='/login' element={<Login isLoggedIn={isLoggedIn} logUserIn={logUserIn} flashMessage={flashMessage} />} />
                     <Route path='/register' element={<Register logUserIn={logUserIn} flashMessage={flashMessage} />} />
                 </Routes>
             </Container>
