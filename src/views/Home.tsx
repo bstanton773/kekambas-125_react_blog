@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PostCard from "../components/PostCard";
 import PostForm from '../components/PostForm';
 import CategoryType from '../types/category';
+import PostType from '../types/post';
 import UserType from '../types/auth';
+import { getAllPosts } from '../lib/apiWrapper';
 
-type Post = {
-    id: number,
-    title: string
-}
 
 type HomeProps = {
     isLoggedIn: boolean,
@@ -17,8 +15,20 @@ type HomeProps = {
 
 export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
     
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [newPost, setNewPost] = useState<Post>({id: 1, title: ''})
+    const [posts, setPosts] = useState<PostType[]>([]);
+    const [newPost, setNewPost] = useState<Partial<PostType>>({id: 1, title: ''})
+
+    useEffect(() => {
+        async function fetchData(){
+            const response = await getAllPosts();
+            console.log(response);
+            if (response.data){
+                setPosts(response.data);
+            }
+        };
+
+        fetchData();
+    }, [])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewPost({...newPost, [event.target.name]: event.target.value})
@@ -27,7 +37,7 @@ export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        setPosts([...posts, newPost]);
+        // setPosts([...posts, newPost]);
         setNewPost({id: posts.length + 2, title: ''});
 
         flashMessage(`${newPost.title} has been created`, 'primary');
@@ -38,7 +48,7 @@ export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
         <>
             <h1>Hello {isLoggedIn ? user?.username : 'Friend'}</h1>
             <PostForm handleChange={handleInputChange} handleSubmit={handleFormSubmit} newPost={newPost} isLoggedIn={isLoggedIn}/>
-            {isLoggedIn && posts.map( p => <PostCard post={p}  key={p.id}/> )}
+            {posts.map( p => <PostCard post={p}  key={p.id}/> )}
         </>
     )
 }

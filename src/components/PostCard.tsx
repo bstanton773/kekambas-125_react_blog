@@ -1,12 +1,9 @@
 // import Card from 'react-bootstrap/Card';
+import PostType from '../types/post';
 
-type Post = {
-    id: number,
-    title: string
-}
 
 type PostCardProps = {
-    post: Post
+    post: PostType
 }
 
 export default function PostCard({ post }: PostCardProps) {
@@ -19,6 +16,8 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="post-card text-center">
             <div>
                 <h3>{post.title}</h3>
+                <h5>By {post.author.firstName}</h5>
+                <p>{post.body}</p>
             </div>
         </div>
     )

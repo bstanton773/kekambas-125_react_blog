@@ -1,15 +1,12 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import PostType from '../types/post';
 
-type Post = {
-    id: number,
-    title: string
-}
 
 type PostFormProps = {
     handleChange: (e:React.ChangeEvent<HTMLInputElement>) => void,
     handleSubmit: (e:React.FormEvent) => void,
-    newPost: Post,
+    newPost: Partial<PostType>,
     isLoggedIn: boolean
 }
 
