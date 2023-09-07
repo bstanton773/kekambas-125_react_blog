@@ -15,7 +15,7 @@ import UserType from './types/auth';
 
 
 export default function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('tokenExp') as string) > new Date()));
+    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('tokenExp') as string) > new Date()) || false);
     const [loggedInUser, setLoggedInUser] = useState<Partial<UserType>|null>(null);
 
     const [message, setMessage] = useState<string|null>(null);
