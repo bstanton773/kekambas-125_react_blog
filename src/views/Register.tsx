@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import CategoryType from '../types/category';
 import UserType from '../types/auth';
-import { register } from '../lib/apiWrapper';
+import { register, login } from '../lib/apiWrapper';
 
 type RegisterProps = {
     logUserIn: (user:Partial<UserType>) => void,
@@ -36,7 +36,11 @@ export default function Register({ logUserIn, flashMessage }: RegisterProps) {
         if (response.error){
             flashMessage(response.error, 'danger')
         } else {
-            logUserIn(response.data!);
+            const newUser = response.data
+            let loginResponse = await login(userFormData.username!, userFormData.password!)
+            localStorage.setItem('token', loginResponse.data?.token!)
+            localStorage.setItem('tokenExp', loginResponse.data?.tokenExpiration!)
+            logUserIn(newUser!);
             navigate('/')
         }
     }

@@ -1,5 +1,5 @@
 // Import Node Modules
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 // Import Views
@@ -12,11 +12,25 @@ import Navigation from "./components/Navigation";
 // Import Types
 import CategoryType from './types/category';
 import UserType from './types/auth';
+// Import apiWrapper functions
+import { getMe } from './lib/apiWrapper';
 
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('tokenExp') as string) > new Date()) || false);
     const [loggedInUser, setLoggedInUser] = useState<Partial<UserType>|null>(null);
+
+    useEffect(() => {
+        if (isLoggedIn){
+            getMe(localStorage.getItem('token') as string)
+                .then(response => {
+                    if (response.data){
+                        setLoggedInUser(response.data)
+                    }
+                })
+                .catch(err => console.error(err))
+        }
+    }, [isLoggedIn])
 
     const [message, setMessage] = useState<string|null>(null);
     const [category, setCategory] = useState<CategoryType|null>(null);
@@ -30,6 +44,8 @@ export default function App() {
     const logUserOut = (): void => {
         setIsLoggedIn(false);
         setLoggedInUser(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenExp');
         flashMessage('You have logged out', 'info');
     }
 
