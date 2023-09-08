@@ -5,7 +5,9 @@ import Container from 'react-bootstrap/Container';
 // Import Views
 import Home from './views/Home';
 import Login from './views/Login';
+import Questions from './views/Questions';
 import Register from './views/Register';
+import ToDos from './views/ToDos';
 // Import Components
 import AlertMessage from './components/AlertMessage';
 import Navigation from "./components/Navigation";
@@ -63,6 +65,8 @@ export default function App() {
                     <Route path='/' element={<Home isLoggedIn={isLoggedIn} user={loggedInUser} flashMessage={flashMessage} />} />
                     <Route path='/login' element={<Login isLoggedIn={isLoggedIn} logUserIn={logUserIn} flashMessage={flashMessage} />} />
                     <Route path='/register' element={<Register logUserIn={logUserIn} flashMessage={flashMessage} />} />
+                    <Route path='/questions' element={<Questions />} />
+                    <Route path='/to-dos' element={<ToDos />} />
                 </Routes>
             </Container>
         </div>
