@@ -103,9 +103,26 @@ async function getMe(token:string): Promise<APIResponse<UserType>> {
     return {error, data}
 }
 
+async function createPost(token:string, newPost: Partial<PostType>): Promise<APIResponse<PostType>> {
+    let error;
+    let data;
+    try {
+        const response = await apiClientTokenAuth(token).post(postEndpoint, newPost);
+        data = response.data
+    } catch(err) {
+        if (axios.isAxiosError(err)){
+            error = err.response?.data.error
+        } else {
+            error = 'Something went wrong';
+        }
+    }
+    return {error, data}
+}
+
 export {
     getAllPosts,
     register,
     login,
     getMe,
+    createPost,
 }
