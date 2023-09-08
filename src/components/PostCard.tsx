@@ -18,6 +18,9 @@ export default function PostCard({ post, currentUser }: PostCardProps) {
         //     </Card.Body>
         // </Card>
         <div className="post-card text-center">
+            <div className="post-card-img">
+                <img src={post.imageUrl} alt="" />
+            </div>
             <div>
                 <h3>{post.title}</h3>
                 <h5>By {post.author.firstName}</h5>
