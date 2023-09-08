@@ -25,7 +25,9 @@ export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
             const response = await getAllPosts();
             console.log(response);
             if (response.data){
-                setPosts(response.data);
+                let posts = response.data
+                posts.sort((a, b) => (new Date(a.dateCreated) > new Date(b.dateCreated)) ? -1 : 1)
+                setPosts(posts);
             }
         }
 

@@ -6,12 +6,14 @@ import Form from 'react-bootstrap/Form';
 import { getPostById, editPostById } from '../lib/apiWrapper';
 import CategoryType from '../types/category';
 import PostType from '../types/post';
+import UserType from '../types/auth';
 
 type EditPostProps = {
-    flashMessage: (message:string, category: CategoryType) => void
+    flashMessage: (message:string, category: CategoryType) => void,
+    currentUser: UserType|null,
 }
 
-export default function EditPost({ flashMessage }: EditPostProps) {
+export default function EditPost({ flashMessage, currentUser }: EditPostProps) {
     const { postId } = useParams();
     const navigate = useNavigate();
 
@@ -28,7 +30,16 @@ export default function EditPost({ flashMessage }: EditPostProps) {
             }
         }
         getPost();
-    }, [])
+    }, [flashMessage, navigate, postId])
+
+    useEffect(() => {
+        if (postToEdit){
+            if (postToEdit.author.id !== currentUser?.id){
+                flashMessage('You do not have permission to edit this post. Who do you think you are?!', 'danger');
+                navigate('/')
+            }
+        }
+    })
 
     const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setPostToEdit({...postToEdit, [e.target.name]: e.target.value} as PostType)
