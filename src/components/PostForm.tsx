@@ -16,7 +16,7 @@ export default function PostForm({ handleChange, handleSubmit, newPost, isLogged
             <Form.Label>Post Title</Form.Label>
             <Form.Control name='title' onChange={handleChange} value={newPost.title} placeholder="Enter Post Title" />
             <Form.Label>Post Body</Form.Label>
-            <Form.Control name='body' onChange={handleChange} value={newPost.body} placeholder="Enter Post Body" />
+            <Form.Control name='body' as='textarea' onChange={handleChange} value={newPost.body} placeholder="Enter Post Body" />
             <Button className='mt-3 w-100' variant='warning' type='submit' disabled={!isLoggedIn}>Create Post</Button>
         </Form>
     )

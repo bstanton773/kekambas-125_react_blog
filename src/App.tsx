@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 // Import Views
+import EditPost from './views/EditPost';
 import Home from './views/Home';
 import Login from './views/Login';
 import Register from './views/Register';
@@ -18,7 +19,7 @@ import { getMe } from './lib/apiWrapper';
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('tokenExp') as string) > new Date()) || false);
-    const [loggedInUser, setLoggedInUser] = useState<Partial<UserType>|null>(null);
+    const [loggedInUser, setLoggedInUser] = useState<UserType|null>(null);
 
     useEffect(() => {
         if (isLoggedIn){
@@ -48,7 +49,7 @@ export default function App() {
     const [message, setMessage] = useState<string|null>(null);
     const [category, setCategory] = useState<CategoryType|null>(null);
 
-    const logUserIn = (user:Partial<UserType>):void => {
+    const logUserIn = (user:UserType):void => {
         setIsLoggedIn(true);
         setLoggedInUser(user);
         flashMessage(`${user.username} has logged in`, 'success');
@@ -76,6 +77,7 @@ export default function App() {
                     <Route path='/' element={<Home isLoggedIn={isLoggedIn} user={loggedInUser} flashMessage={flashMessage} />} />
                     <Route path='/login' element={<Login isLoggedIn={isLoggedIn} logUserIn={logUserIn} flashMessage={flashMessage} />} />
                     <Route path='/register' element={<Register logUserIn={logUserIn} flashMessage={flashMessage} />} />
+                    <Route path='/post/:postId' element={<EditPost flashMessage={flashMessage} />} />
                 </Routes>
             </Container>
         </div>

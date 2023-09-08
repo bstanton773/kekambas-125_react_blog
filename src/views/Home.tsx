@@ -10,7 +10,7 @@ import { getAllPosts, createPost } from '../lib/apiWrapper';
 
 type HomeProps = {
     isLoggedIn: boolean,
-    user: Partial<UserType>|null,
+    user: UserType|null,
     flashMessage: (message:string|null, category: CategoryType|null) => void,
 }
 
@@ -59,7 +59,7 @@ export default function Home({ isLoggedIn, user, flashMessage }: HomeProps) {
             { displayForm && (
                 <PostForm handleChange={handleInputChange} handleSubmit={handleFormSubmit} newPost={newPost} isLoggedIn={isLoggedIn}/>
             )}
-            {posts.map( p => <PostCard post={p}  key={p.id}/> )}
+            {posts.map( p => <PostCard post={p}  key={p.id} currentUser={user} /> )}
         </>
     )
 }

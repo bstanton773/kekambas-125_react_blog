@@ -9,7 +9,7 @@ import { login, getMe } from '../lib/apiWrapper';
 
 type LoginProps = {
     isLoggedIn: boolean,
-    logUserIn: (user:Partial<UserType>) => void,
+    logUserIn: (user:UserType) => void,
     flashMessage: (message: string|null, category: CategoryType|null) => void,
 }
 

@@ -1,12 +1,16 @@
 // import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import PostType from '../types/post';
+import UserType from '../types/auth';
 
 
 type PostCardProps = {
-    post: PostType
+    post: PostType,
+    currentUser: UserType|null,
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, currentUser }: PostCardProps) {
     return (
         // <Card key={post.id}>
         //     <Card.Body>
@@ -18,6 +22,11 @@ export default function PostCard({ post }: PostCardProps) {
                 <h3>{post.title}</h3>
                 <h5>By {post.author.firstName}</h5>
                 <p>{post.body}</p>
+                {currentUser?.id === post.author.id && (
+                    <Link to={`/post/${post.id}`}>
+                        <Button variant='primary'>Edit Post</Button>
+                    </Link>
+                )}
             </div>
         </div>
     )

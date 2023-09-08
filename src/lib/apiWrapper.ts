@@ -119,10 +119,27 @@ async function createPost(token:string, newPost: Partial<PostType>): Promise<API
     return {error, data}
 }
 
+async function getPostById(postId:string): Promise<APIResponse<PostType>> {
+    let error;
+    let data;
+    try{
+        const response = await apiClientNoAuth().get(postEndpoint + '/' + postId);
+        data = response.data;
+    } catch(err){
+        if (axios.isAxiosError(err)){
+            error = err.response?.data.error
+        } else {
+            error = 'Something went wrong';
+        }
+    }
+    return {error, data}
+}
+
 export {
     getAllPosts,
     register,
     login,
     getMe,
     createPost,
+    getPostById,
 }
